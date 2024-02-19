@@ -1,5 +1,6 @@
 import Route from '@ioc:Adonis/Core/Route'
 import '../routes/users'
+import '../routes/cards'
 import '../routes/public'
 import '../routes/auth'
 import '../routes/admin'

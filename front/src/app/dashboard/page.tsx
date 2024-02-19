@@ -18,8 +18,8 @@ export default function Dashboard() {
               Dashboard
             </h2>
             <main className="flex flex-col">
-              <h3 className="text-2xl font-bold px-4 py-2">Categories</h3>
-              <div className="flex overflow-x-scroll pb-4 px-4 gap-3">
+              <h3 className="text-2xl font-bold py-2">Categories</h3>
+              <div className="flex overflow-x-scroll pb-4 gap-3">
                 {categories.map((category, key) => (
                   <ToogleBtn
                     key={category.id}

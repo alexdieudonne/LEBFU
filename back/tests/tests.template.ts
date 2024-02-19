@@ -1,9 +1,9 @@
 import Database from '@ioc:Adonis/Lucid/Database'
 import { test } from '@japa/runner'
-// import Config from '@ioc:Adonis/Core/Config'
+import Config from '@ioc:Adonis/Core/Config'
 
 test.group('Template Test', (group) => {
-  // const baseURL = Config.get('app.url.baseURL')
+  const baseURL = Config.get('app.url.baseURL')
   /**
    * Database Transaction Note
    *
@@ -18,4 +18,6 @@ test.group('Template Test', (group) => {
   // group.afterEach(async () => {
   //   await Database.rollbackGlobalTransaction()
   // })
+
+  
 })
