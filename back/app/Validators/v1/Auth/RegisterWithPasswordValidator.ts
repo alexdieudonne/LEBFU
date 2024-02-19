@@ -12,6 +12,8 @@ export default class RegisterWithPasswordValidator {
         column: 'email',
       }),
     ]),
+    firstname: schema.string(),
+    lastname: schema.string(),
     password: schema.string(),
   })
 

@@ -65,32 +65,6 @@ export default function Home() {
         </aside>
       </div>
 
-      <div></div>
-      <div
-        className="fixed inset-0 z-10 bg-black opacity-50 hidden lg:hidden"
-        id="sidebarBackdrop"
-      ></div>
-      <div className="fixed inset-y-0 left-0 flex items-center z-30 lg:hidden">
-        <button
-          id="sidebarToggle"
-          className="text-white focus:outline-none focus:ring p-2 hover:bg-gray-900 rounded-r-lg"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
-      </div>
     </main>
   );
 }

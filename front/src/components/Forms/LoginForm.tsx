@@ -14,12 +14,12 @@ import {
 } from "next/navigation";
 import { setUserCookie } from "@/lib/helpers/UserHelper";
 import { UserCookieType } from "@/types/User";
-import { useLazyGetMyProfileQuery } from "@/lib/services/user";
+import { useLazyGetMeQuery } from "@/lib/services/user";
 import { ApiErrorData, ApiSuccessBase } from "@/types/ApiBase";
 
 function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [login, { error, data, isError, isLoading }] = useLoginMutation();
-  const [getMyProfileAsync] = useLazyGetMyProfileQuery();
+  const [getMyProfileAsync] = useLazyGetMeQuery();
   const initialValues = {
     email: "",
     password: "",

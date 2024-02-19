@@ -10,10 +10,9 @@ export default class UserSessionMiddleware {
 
   public async handle({ request, response }: HttpContextContract, next: () => Promise<void>) {
     const headers = request.headers()
-
+    const headerAuthorization = headers['authorization'] as string | undefined
     // Get token from request headers
-    const token = headers['x-auth-token'] as string | undefined
-
+    const token = headerAuthorization?.split(' ')[1]
     // If token is not present, return unauthorized
     if (!token) {
       return response.api({ message: 'Token cannot be empty' }, StatusCodes.UNAUTHORIZED)

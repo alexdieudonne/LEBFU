@@ -1,7 +1,7 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
-  Route.get('/', ({ response }) => {
-    return response.api({ message: 'Hello world' }, 200)
-  })
+  Route.get('/me', 'UserController.getMe').middleware('userSession')
 })
+  .namespace('App/Controllers/Http/v1/Auth')
+

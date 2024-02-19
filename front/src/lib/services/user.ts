@@ -2,26 +2,11 @@ import api from "./api";
 import { User, UserCookieType } from "@/types/User";
 import { setCredentials } from "./slices/authSlice";
 import { getUserCookie, setUserCookie } from "../helpers/UserHelper";
+import { ApiSuccessBase } from "@/types/ApiBase";
 
 export const userApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getUserSchedules: build.query<HydraPaginateResp<Schedule>, string>({
-            query: (idUser) => {
-                return {
-                    url: `/users/${idUser}/schedules`,
-                };
-            },
-            providesTags: (result, _error, filters) =>
-                result
-                    ? [
-                        ...result['hydra:member'].map(({ employee: { id } }) => ({
-                            type: "StoreSchedules" as const,
-                            id,
-                        }))
-                    ]
-                    : [],
-        }),
-        getMyProfile: build.query<User, void>({
+        getMe: build.query<ApiSuccessBase<{ user: User }>, void>({
             query: () => {
                 return {
                     url: `/users/me`,
@@ -33,11 +18,11 @@ export const userApi = api.injectEndpoints({
                 if (session.user) {
                     dispatch(setCredentials({ user: session.user }));
                 }
-                const { data: user } = await queryFulfilled;
+                const { data } = await queryFulfilled;
                 setUserCookie(UserCookieType.SESSION, ({
-                    user: user
+                    user: data.data.user
                 }));
-                dispatch(setCredentials({ user }));
+                dispatch(setCredentials({ user: data.data.user }));
             },
             providesTags: ["Me"],
         }),
@@ -46,7 +31,6 @@ export const userApi = api.injectEndpoints({
 });
 
 export const {
-    useGetMyProfileQuery,
-    useLazyGetMyProfileQuery,
-    useLazyGetUserSchedulesQuery
+    useGetMeQuery,
+    useLazyGetMeQuery,
 } = userApi;

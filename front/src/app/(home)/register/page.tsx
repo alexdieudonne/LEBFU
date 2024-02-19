@@ -8,14 +8,22 @@ import { useRegisterMutation } from "@/lib/services/auth";
 import { Button } from "@/components/Ui/Button";
 import { UserRegister } from "@/types/User";
 import { ApiErrorResponse } from "@/types/ApiBase";
-import { Form, Field, FormikProvider, useFormik, ErrorMessage, FormikConfig } from "formik";
+import {
+  Form,
+  Field,
+  FormikProvider,
+  useFormik,
+  ErrorMessage,
+  FormikConfig,
+} from "formik";
 import { AppConfig } from "@/lib/helpers/appConfig";
 
 export default function Register() {
   const initialValues: UserRegister = {
     firstname: "",
+    lastname: "",
     email: "",
-    plainPassword: "",
+    password: "",
     confirmPassword: "",
   };
   const router = useRouter();
@@ -36,14 +44,13 @@ export default function Register() {
   const redirectUrl = searchParams?.get("redirectUrl");
 
   const onSubmit: FormikConfig<UserRegister>["onSubmit"] = (values) => {
-    register(values)
+    register({
+      ...values,
+      password: values.confirmPassword,
+    })
       .unwrap()
       .then((res) => {
-        if (redirectUrl) {
-          router.push(redirectUrl);
-        } else {
-          router.push("login");
-        }
+        router.push("login");
         toast.custom((t) => (
           <div
             className={`${"animate-enter"} max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
@@ -55,17 +62,9 @@ export default function Register() {
                     Inscription
                   </p>
                   <p className="mt-1 text-sm text-gray-500">
-                    To complete the registration process and activate your
-                    account, please check your email inbox.
+                    Merci de votre inscription
                     <br />
                     <br />
-                    If you encounter any issues or have questions, feel free to
-                    contact our support team at :
-                    <Link className="text-main hover:text-main-dark transition-all"
-                      href="mailto:support@example.com"
-                    >
-                      support@example.com
-                    </Link>
                   </p>
                 </div>
               </div>
@@ -85,7 +84,7 @@ export default function Register() {
       })
       .catch((error: ApiErrorResponse) => {
         toast.error((error as any).message);
-      })
+      });
   };
 
   const formik = useFormik<UserRegister>({
@@ -220,7 +219,13 @@ export default function Register() {
                     className="mr-2 focus:outline-0 font-inter text-gray-600 placeholder:text-sm"
                   />
                   <span className="text-black text-sm font-inter">
-                    I have read and agree to the <Link href="/terms" className="text-blue-500 hover:text-blue-700">Terms and Conditions</Link>
+                    I have read and agree to the{" "}
+                    <Link
+                      href="/terms"
+                      className="text-blue-500 hover:text-blue-700"
+                    >
+                      Terms and Conditions
+                    </Link>
                   </span>
                 </label>
                 <ErrorMessage
@@ -233,6 +238,7 @@ export default function Register() {
                     intent="default"
                     type="submit"
                     className="mt-4 w-full"
+                    isLoading={isRegisterLoading}
                   >
                     Register
                   </Button>

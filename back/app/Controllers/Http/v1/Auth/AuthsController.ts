@@ -35,6 +35,8 @@ export default class AuthsController {
         const user = await User.create(
           {
             email: payload.email,
+            firstname: payload.firstname,
+            lastname: payload.lastname,
             encryptedPassword: payload.password
           },
           { client: trx }
@@ -51,6 +53,9 @@ export default class AuthsController {
         StatusCodes.CREATED
       )
     } catch (e) {
+      console.log('====================================');
+      console.log(e);
+      console.log('====================================');
       return response.api({ message: 'Failed to create account.' }, StatusCodes.INTERNAL_SERVER_ERROR)
     }
   }
