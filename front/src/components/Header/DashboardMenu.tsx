@@ -223,7 +223,7 @@ export default function DashboardMenu() {
                                     notifications.length > 0 ? (
                                         <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-1 -end-1 dark:border-gray-900">
                                             {notifications.length}
-                                        </div>
+    </div>
                                     ) : null
                                 }
                             </a>
