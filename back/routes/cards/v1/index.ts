@@ -1,31 +1,21 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 Route.group(() => {
-  Route.get('/', 'CardController.getAll').middleware('userSession')
+  Route.get('/', 'CardController.getAll')
 })
   .namespace('App/Controllers/Http/v1/Card')
 
 Route.group(() => {
-  Route.post('/', 'CardController.create').middleware('userSession')
+  Route.post('/', 'CardController.create')
 })
   .namespace('App/Controllers/Http/v1/Card')
 
 Route.group(() => {
-  Route.get('/:id', 'CardController.getOne').middleware('userSession')
+  Route.get('/quizz', 'LearningController.getCardsForToday')
 })
   .namespace('App/Controllers/Http/v1/Card')
 
 Route.group(() => {
-  Route.patch('/:id', 'CardController.update').middleware('userSession')
+  Route.post('/:cardId/answer', 'LearningController.answerQuestion')
 })
   .namespace('App/Controllers/Http/v1/Card')
-
-Route.group(() => {
-  Route.delete('/:id', 'CardController.delete').middleware('userSession')
-})
-
-Route.group(() => {
-  Route.post('/:id/answer', 'CardController.answerCard').middleware('userSession')
-})
-  .namespace('App/Controllers/Http/v1/Card')
-
