@@ -5,6 +5,7 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import Cards from "App/Models/Cards";
 import { CardsCategoryEnum } from "App/Types/Enums/CardsCategoryEnum";
 import { DateTime } from "luxon";
+import AnswerCardValidator from "App/Validators/v1/Card/AnswerCardValidator";
 
 export default class LearningController {
 
@@ -38,7 +39,8 @@ export default class LearningController {
 
     public async answerQuestion({ request, response }: HttpContextContract) {
         const { cardId } = request.params();
-        const { answer } = request.body();
+
+        const payload = await request.validate(AnswerCardValidator);
 
         try {
             const cardsQuery = Cards.query()
@@ -51,7 +53,11 @@ export default class LearningController {
                 return response.status(StatusCodes.NOT_FOUND).json('card not found.')
             }
 
-            const correct = card.answer == answer;
+            if (!this.isCardDueForAnswer(card, DateTime.now())) {
+                return response.status(StatusCodes.BAD_REQUEST).json('This question cannot be answered at the moment.');
+            }
+
+            const correct = card.answer == payload.answer;
             const newCategory = correct ? this.getNextCategory(card.category) : CardsCategoryEnum.FIRST;
             card.category = newCategory;
             await card.save();
@@ -89,7 +95,7 @@ export default class LearningController {
         }
     }
 
-    private isCardDueForReview(card: Cards, today: DateTime): boolean {
+    private isCardDueForAnswer(card: Cards, today: DateTime): boolean {
         const interval = this.getReviewIntervalForCategory(card.category);
         return card.updatedAt <= today.minus({ days: interval });
     }
