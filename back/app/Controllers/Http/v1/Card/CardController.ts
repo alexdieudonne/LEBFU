@@ -11,7 +11,6 @@ export default class CardController {
     const cardsQuery = Cards.query()
 
     const cards = await cardsQuery.select('*')
-    console.log("🚀 ~ CardController ~ getAll ~ cards:", cards)
 
     if (cards.length === 0) {
       return response.status(StatusCodes.NOT_FOUND).json( 'No cards found.')
@@ -21,8 +20,6 @@ export default class CardController {
 
   public async create({ request, response }: HttpContextContract) {
     const { question, answer, tag } = request.body()
-
-    // const userId = request.decoded!.user_id
 
     const card = new Cards()
     card.question = question

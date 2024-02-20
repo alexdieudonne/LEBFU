@@ -11,10 +11,10 @@ export default class LearningController {
     public async getCardsForToday({ request, response }: HttpContextContract) {
 
         try {
-            // const userId = request.decoded!.user_id;
+            const userId = request.decoded!.user_id;
             const today = DateTime.now();
             const cards = await Cards.query()
-                // .where('userId', userId)
+                .where('userId', userId)
                 .andWhere((query) => {
                     Object.values(CardsCategoryEnum).forEach((category) => {
                         const interval = this.getReviewIntervalForCategory(category as CardsCategoryEnum);
@@ -53,7 +53,6 @@ export default class LearningController {
 
             const correct = card.answer == answer;
             const newCategory = correct ? this.getNextCategory(card.category) : CardsCategoryEnum.FIRST;
-            console.log("🚀 ~ LearningController ~ answerQuestion ~ this.getNextCategory(card.category):", this.getNextCategory(card.category))
             card.category = newCategory;
             await card.save();
 
@@ -88,6 +87,11 @@ export default class LearningController {
             case CardsCategoryEnum.SEVENTH: return CardsCategoryEnum.SEVENTH;
             default: return CardsCategoryEnum.FIRST;
         }
+    }
+
+    private isCardDueForReview(card: Cards, today: DateTime): boolean {
+        const interval = this.getReviewIntervalForCategory(card.category);
+        return card.updatedAt <= today.minus({ days: interval });
     }
 
 }
