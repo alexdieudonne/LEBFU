@@ -82,8 +82,11 @@ export default function Register() {
           </div>
         ));
       })
-      .catch((error: ApiErrorResponse) => {
-        toast.error((error as any).message);
+      .catch(({ data, error, status }) => {
+        if (status === "FETCH_ERROR") {
+          return toast.error(`API Error ${error}`);
+        }
+        toast.error((data as ApiErrorResponse["data"]).errors[0].message);
       });
   };
 

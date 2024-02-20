@@ -14,9 +14,6 @@ export default class CardController {
     if (!cards) {
       return response.api({ message: 'No cards' }, StatusCodes.UNAUTHORIZED)
     }
-    return response.api(
-      { cards },
-      StatusCodes.OK
-    )
+    return response.api(cards, StatusCodes.OK)
   }
 }

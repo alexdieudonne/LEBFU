@@ -3,4 +3,3 @@ export type LoginResponse = {
     "expires_at": number,
     "refresh_token": string
 }
-

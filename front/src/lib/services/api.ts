@@ -8,6 +8,8 @@ import { UserCookieType } from '@/types/User';
 export const api = createApi({
   tagTypes: [
     "Me",
+    "Cards",
+    "CardsQuizz"
   ],
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,

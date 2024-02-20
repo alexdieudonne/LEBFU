@@ -1,5 +1,4 @@
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
-import HttpStatus from 'http-status-codes'
 
 /*
 |--------------------------------------------------------------------------
@@ -33,18 +32,9 @@ export default class ResponseProvider {
     const Response = this.app.container.use('Adonis/Core/Response')
 
     Response.macro('api', function (data, status) {
-      const request = this.ctx!.request
-
       this.ctx!.response.header('Access-Control-Allow-Origin', '*')
 
-      this.ctx!.response.status(status).json({
-        response: {
-          status: status,
-          message: HttpStatus.getStatusText(status),
-          url: request.completeUrl(),
-        },
-        data,
-      })
+      this.ctx!.response.status(status).json(data)
       return this
     })
   }

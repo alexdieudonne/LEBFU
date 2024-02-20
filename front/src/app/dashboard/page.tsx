@@ -5,18 +5,29 @@ import { useState } from "react";
 import { selectCurrentUser } from "@/lib/services/slices/authSlice";
 import { categories } from "@/lib/constants/fakeDatas";
 import ToogleBtn from "@/components/Toogle";
+import CardQuizz from "@/components/Dashboard/Cards/CardQuizz";
+import { Card } from "@/types/Card";
+import { CardsCategoryEnum } from "@/types/CategoryCard";
+import { Button } from "@/components/Ui/ButtonShadcn";
+import DialogCreateCard from "@/components/Dialog/DialogCreateCard";
+import { useGetCardsQuery } from "@/lib/services/cards";
 
 export default function Dashboard() {
   const user = useSelector(selectCurrentUser);
   const [selectedToggle, setSelectedToggle] = useState<string | undefined>();
+  const { data, isLoading } = useGetCardsQuery();
+  const cards = data ? data : [];
   return (
-    <section className="lg:pl-72 block min-h-screen">
+    <div className="lg:pl-72 block min-h-screen">
       <div className="p-4 sm:p-6 lg:p-8 h-full">
         <div className="mx-auto bg-white dark:bg-slate-800 px-8 py-8 rounded-xl shadow border">
           <section>
-            <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-8">
-              Dashboard
+            <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-4xl mb-2">
+              Welcome {user?.firstname}
             </h2>
+            <p className="text-lg text-gray-500 mb-8">
+              Here you can manage your quizz
+            </p>
             <main className="flex flex-col">
               <h3 className="text-2xl font-bold py-2">Categories</h3>
               <div className="flex overflow-x-scroll pb-4 gap-3">
@@ -32,64 +43,26 @@ export default function Dashboard() {
                   />
                 ))}
               </div>
-              <div className="flex">
-                <aside className="bg-gray-800 flex text-white w-64 space-y-6 py-7 px-2 inset-y-0 left-0 transition duration-200 ease-in-out z-20">
-                  <div className="flex flex-col justify-between h-full">
-                    <nav>
-                      <ul>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2.5 px-4 hover:bg-gray-700"
-                          >
-                            Category 1
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2.5 px-4 hover:bg-gray-700"
-                          >
-                            Projects
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2.5 px-4 hover:bg-gray-700"
-                          >
-                            Tasks
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href="#"
-                            className="block py-2.5 px-4 hover:bg-gray-700"
-                          >
-                            Team
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
-                  </div>
-                </aside>
 
-                <aside className="relative ml-3">
-                  <div className="container mx-auto px-6 py-8">
-                    <h1 className="text-2xl font-semibold mb-4">
-                      Welcome to the Dashboard
-                    </h1>
-                    <p>
-                      This is the main content area where your dashboard data
-                      will be displayed.
-                    </p>
+              <div className="my-4">
+                <div className="flex justify-between">
+                  <h3 className="text-2xl font-bold py-2">Quizzes</h3>
+                  <DialogCreateCard titleBtn="Create" />
+                </div>
+
+                {cards.length === 0 ? (
+                  <div className="text-center py-10 bg-gray-100 flex flex-col gap-2 items-center rounded-md">
+                    <h4>No quizz</h4>
+                    <DialogCreateCard titleBtn="Create One" />
                   </div>
-                </aside>
+                ) : (
+                  cards.map((d) => <CardQuizz key={d.id} {...d} />)
+                )}
               </div>
             </main>
           </section>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
