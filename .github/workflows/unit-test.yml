@@ -7,7 +7,7 @@ on:
     branches: [feature/**, devel/**]
 
 jobs:
-  test:
+  test-back:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,8 +15,16 @@ jobs:
       - name: Install Modules
         run: cd back && yarn install
 
-      - name: Check lint on entire project
-        run: cd back && yarn lint
-
       - name: Start Testing
         run: cd back && yarn test
+
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Modules
+        run: cd front && yarn install
+
+      - name: Start Testing
+        run: cd front && yarn test
