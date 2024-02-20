@@ -2,7 +2,7 @@ name: Unit Testting
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [main]
   push:
     branches: [feature/**, devel/**]
 
@@ -13,10 +13,10 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Install Modules
-        run: yarn install
+        run: cd back && yarn install
 
       - name: Check lint on entire project
-        run: yarn lint
+        run: cd back && yarn lint
 
       - name: Start Testing
-        run: yarn test
+        run: cd back && yarn test
