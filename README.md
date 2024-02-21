@@ -1,3 +1,13 @@
+# Before you start
+- Make sure you have Node.js installed on your machine.
+- Make sure you have Yarn installed on your machine.
+- Git clone the project to your machine.
+```bash
+https://github.com/alexdieudonne/LEBFU.git
+```
+
+
+
 # Backend
 ## Prerequisites
 - Move to the backend directory

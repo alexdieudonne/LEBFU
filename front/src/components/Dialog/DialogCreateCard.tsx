@@ -47,7 +47,7 @@ const initialValues: Omit<CreateCardRequest, "id"> = {
 
 const DialogCreateCard: FC<DialogCreateCardProps> = ({ titleBtn }) => {
   const [createCard] = useCreateCardMutation();
-
+  const ref = React.useRef<HTMLButtonElement>(null);
   const validationSchema = Yup.object().shape({
     question: Yup.string().required("Required"),
     answer: Yup.string().required("Required"),
@@ -64,6 +64,11 @@ const DialogCreateCard: FC<DialogCreateCardProps> = ({ titleBtn }) => {
       .unwrap()
       .then(() => {
         form.reset();
+        ref.current?.click();
+        toast({
+          title: "Success",
+          description: "Card created successfully",
+        });
       })
       .catch((error) => {
         toast({
@@ -76,7 +81,7 @@ const DialogCreateCard: FC<DialogCreateCardProps> = ({ titleBtn }) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild ref={ref}>
         <Button variant="outline">{titleBtn}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
