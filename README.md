@@ -1,4 +1,9 @@
 # Backend
+## Prerequisites
+- Move to the backend directory
+```bash
+cd back
+```
 - Create a new `.env`by duplicating the `.env.example` file and renaming it to `.env`.
 ```bash
 cp .env.example .env
@@ -16,11 +21,22 @@ node ace migration:run
 ```bash
 yarn run dev
 ```
+- Run the tests
+```bash
+node ace test --watch
+```
+
+- Swagger available at http://localhost:3333/docs
+- Project available at http://localhost:3333
 
 # Frontend
 
 
 ## Prerequisites
+### Move to the frontend directory
+```bash
+cd front
+```
 - Create a `.env` file with the following content inside the `front` directory:
 `NEXT_PUBLIC_API_URL=http://localhost:3333`
 
@@ -29,10 +45,7 @@ yarn run dev
 yarn install
 ```
 
-## Move to the frontend directory
-```bash
-cd front
-```
+
 
 ## To run all the tests, run the following command:
 ```bash

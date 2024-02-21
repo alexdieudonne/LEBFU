@@ -16,7 +16,7 @@ export default class CardController {
     if (cards.length === 0) {
       return response.status(StatusCodes.NOT_FOUND).json('No cards found.')
     }
-    return response.status(StatusCodes.OK).json({ cards })
+    return response.status(StatusCodes.OK).json(cards)
   }
 
   public async create({ request, response }: HttpContextContract) {

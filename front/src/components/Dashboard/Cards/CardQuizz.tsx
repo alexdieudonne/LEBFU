@@ -22,7 +22,7 @@ const CardQuizz: FC<Card> = ({ category, id, question, tag }) => {
         </p>
       </div>
       <div className="absolute w-full h-full top-0 left-0 flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-white">{question}</h1>
+        <h1 className="text-2xl font-bold text-white max-w-60 text-center">{question}</h1>
       </div>
       <div className="absolute px-3 py-4 bottom-0 left-0 w-full border-t border-white bg-purple-400">
         <div className=" bg-purple-400 rounded-lg w-fit px-3 py-1 flex items-center">

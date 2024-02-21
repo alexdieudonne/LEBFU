@@ -50,14 +50,16 @@ export default function Dashboard() {
                   <DialogCreateCard titleBtn="Create" />
                 </div>
 
-                {cards.length === 0 ? (
-                  <div className="text-center py-10 bg-gray-100 flex flex-col gap-2 items-center rounded-md">
-                    <h4>No quizz</h4>
-                    <DialogCreateCard titleBtn="Create One" />
-                  </div>
-                ) : (
-                  cards.map((d) => <CardQuizz key={d.id} {...d} />)
-                )}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {cards.length === 0 ? (
+                    <div className="text-center py-10 bg-gray-100 flex flex-col gap-2 items-center rounded-md">
+                      <h4>No quizz</h4>
+                      <DialogCreateCard titleBtn="Create One" />
+                    </div>
+                  ) : (
+                    cards.map((d) => <CardQuizz key={d.id} {...d} />)
+                  )}
+                </div>
               </div>
             </main>
           </section>
