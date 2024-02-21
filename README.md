@@ -3,7 +3,7 @@
 - Make sure you have Yarn installed on your machine.
 - Git clone the project to your machine.
 ```bash
-https://github.com/alexdieudonne/LEBFU.git
+    git clone https://github.com/alexdieudonne/LEBFU.git
 ```
 
 
