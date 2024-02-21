@@ -6,7 +6,7 @@ import { ApiSuccessBase } from "@/types/ApiBase";
 
 export const userApi = api.injectEndpoints({
     endpoints: (build) => ({
-        getMe: build.query<ApiSuccessBase<{ user: User }>, void>({
+        getMe: build.query<{ user: User }, void>({
             query: () => {
                 return {
                     url: `/users/me`,
@@ -20,9 +20,9 @@ export const userApi = api.injectEndpoints({
                 }
                 const { data } = await queryFulfilled;
                 setUserCookie(UserCookieType.SESSION, ({
-                    user: data.data.user
+                    user: data.user
                 }));
-                dispatch(setCredentials({ user: data.data.user }));
+                dispatch(setCredentials({ user: data.user }));
             },
             providesTags: ["Me"],
         }),

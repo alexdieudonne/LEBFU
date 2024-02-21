@@ -1,11 +1,6 @@
-export interface ApiSuccessBase<T = any> {
-    "response": {
-        "status": number,
-        "message": string,
-        "url": string
-    },
-    "data": T
-}
+export type ApiSuccessBase<T = any> = T
+
+export type ApiResponseMessage = { "message": string }
 
 export type ApiErrorResponse = {
     data: ApiErrorData,

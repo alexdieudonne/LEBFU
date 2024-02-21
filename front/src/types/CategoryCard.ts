@@ -6,5 +6,5 @@ export enum CardsCategoryEnum {
     FIFTH = "FIFTH",
     SIXTH = "SIXTH",
     SEVENTH = "SEVENTH",
-    DONE = "DONE"
+    DONE = "DONE",
 }

@@ -6,16 +6,11 @@ import { Button } from "@/components/Ui/Button";
 import { useLoginMutation } from "@/lib/services/auth";
 import React from "react";
 import toast from "react-hot-toast";
-import {
-  useParams,
-  usePathname,
-  useRouter,
-  useSearchParams,
-} from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { setUserCookie } from "@/lib/helpers/UserHelper";
 import { UserCookieType } from "@/types/User";
 import { useLazyGetMeQuery } from "@/lib/services/user";
-import { ApiErrorData, ApiSuccessBase } from "@/types/ApiBase";
+import { ApiErrorResponse, ApiResponseMessage } from "@/types/ApiBase";
 
 function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
   const [login, { error, data, isError, isLoading }] = useLoginMutation();
@@ -46,9 +41,9 @@ function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
       })
         .unwrap()
         .then(async (res) => {
-          if (res.data.access_token) {
+          if (res.access_token) {
             setUserCookie(UserCookieType.SESSION, {
-              token: res.data.access_token,
+              token: res.access_token,
             });
             await getMyProfileAsync()
               .unwrap()
@@ -70,7 +65,7 @@ function LoginForm({ onSuccess }: { onSuccess?: () => void }) {
           if (status === "FETCH_ERROR") {
             return toast.error(`API Error ${error}`);
           }
-          toast.error(data.data.message);
+          toast.error((data as ApiResponseMessage).message);
         });
     },
   });
