@@ -12,10 +12,10 @@ export default class LearningController {
     public async getCardsForToday({ request, response }: HttpContextContract) {
 
         try {
-            const userId = request.decoded!.user_id;
+            // const userId = request.decoded!.user_id;
             const today = DateTime.now();
             const cards = await Cards.query()
-                .where('userId', userId)
+                // .where('userId', userId)
                 .andWhere((query) => {
                     Object.values(CardsCategoryEnum).forEach((category) => {
                         const interval = this.getReviewIntervalForCategory(category as CardsCategoryEnum);
@@ -33,6 +33,7 @@ export default class LearningController {
 
             return response.status(StatusCodes.OK).json({ cards });
         } catch (error) {
+            console.log(error)
             return response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ message: 'Failed to get cards for today.' });
         }
     }
