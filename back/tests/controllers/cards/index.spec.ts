@@ -15,7 +15,7 @@ test.group('Cards index', (group) => {
   test('Get all cards', async ({ assert, client }) => {
     const response = await client.get('/cards')
     response.assertStatus(200)
-    response.assertBodyContains({ cards: [] })
+    response.assertBodyContains([] )
   })
   test('Create a card', async ({ assert, client }) => {
     const response = await client.post('/cards').form({
@@ -25,7 +25,7 @@ test.group('Cards index', (group) => {
     })
     
     response.assertStatus(201)
-    const card = response.body().card;
+    const card = response.body();
     assert.exists(card.id, 'ID is missing');
     assert.equal(card.question, 'What is the capital of France?');
     assert.equal(card.answer, 'Paris');
