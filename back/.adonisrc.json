@@ -26,5 +26,16 @@
   ],
   "aceProviders": [
     "@adonisjs/repl"
-  ]
+  ],
+  "tests": {
+    "suites": [
+      {
+        "name": "controllers",
+        "files": [
+          "tests/controllers/**/*"
+        ],
+        "timeout": 5000
+      }
+    ]
+  }
 }
